@@ -59,15 +59,16 @@ function gdx_analytics_drupal_snowplow_page_attachments(array &$page) {
   }
 
   // Attach the tracking code to front-end pages.
-  if(!$admin_context->isAdminRoute()){
-    if($snowplow_version == 'Standalone Search vE.2.14.0') {
+  if (!$admin_context->isAdminRoute()) {
+    $page['#attached']['drupalSettings']['script_uri'] = $script_uri;
+
+    if ($snowplow_version == 'Standalone Search vE.2.14.0') {
       $page['#attached']['drupalSettings']['search_terms'] = explode(' ', Drupal::request()->query->all()['keys']);
-      $page['#attached']['drupalSettings']['script_uri'] = $script_uri;
       $page['#attached']['library'][] = 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker_search';
-    } elseif ($snowplow_version == 'Standalone vE.2.14.0'){
-      $admin_context = \Drupal::service('router.admin_context');
-      $page['#attached']['drupalSettings']['script_uri'] = $script_uri;
-      $page['#attached']['library'][] = 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker'; 
+    } elseif ($snowplow_version == 'Standalone vE.2.14.0') {
+      $page['#attached']['library'][] = 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker';
+    } elseif ($snowplow_version == 'Healthlink Inline Search vC.2.14.0') {
+      $page['#attached']['library'][] = 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker_hlbc';
     }
   }
 }
