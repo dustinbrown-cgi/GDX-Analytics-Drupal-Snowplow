@@ -1,5 +1,5 @@
 name: 'GDX Analytics Drupal Snowplow'
 type: module
-description: 'This is the GDX Analytics Drupal Snowplow module.'
-core: 8.x
+description: 'GDX Analytics Drupal Snowplow module, customized for HLBC'
+core_version_requirement: ^8 || ^9
 package: 'Analytics'
