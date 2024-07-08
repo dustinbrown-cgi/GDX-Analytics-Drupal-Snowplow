@@ -1,5 +1,6 @@
 name: 'GDX Analytics Drupal Snowplow'
 type: module
-description: 'GDX Analytics Drupal Snowplow module, customized for HLBC'
-core_version_requirement: ^8 || ^9
+description: 'Configures the Javascript tracker for the BC Government GDX Analytics Snowplow pipeline. Customized for HLBC.'
+core_version_requirement: ^8 || ^9 || ^10
 package: 'Analytics'
+version: '3.1.0'
