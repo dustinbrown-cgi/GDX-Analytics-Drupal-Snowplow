@@ -86,7 +86,7 @@ function handleNonAdminRoutes(&$page, $logger) {
     $settings = \Drupal::config(GDX_ANALYTICS_CONFIG_NAME)->getRawData();
 
     // Set collector, script uri, app_id, snowplow_version and search path.
-    $page['#attached']['drupalSettings'] = [
+    $page['#attached']['drupalSettings']['gdx_snowplow'] = [
       'gdx_collector' => $settings['gdx_collector_mode'],
       'app_id' => $settings['gdx_analytics_app_id'],
       'snowplow_version' => $settings['gdx_analytics_snowplow_version'],
@@ -94,7 +94,7 @@ function handleNonAdminRoutes(&$page, $logger) {
     ];
 
     // Attach the main tracking code url.
-    $page['#attached']['drupalSettings']['script_uri'] = $settings['gdx_analytics_snowplow_script_uri'];
+    $page['#attached']['drupalSettings']['gdx_snowplow']['script_uri'] = $settings['gdx_analytics_snowplow_script_uri'];
 
     // Handle version-specific logic.
     if ($settings['gdx_analytics_snowplow_version'] == 1) {
@@ -133,9 +133,9 @@ function handleTrackerWithSearch(&$page, $settings) {
     // Extract the search query parameters from the URI (value of the first key)
     $search_terms = reset($_GET);
     if (!empty($search_terms)) {
-      $page['#attached']['drupalSettings']['search'] = true;
+      $page['#attached']['drupalSettings']['gdx_snowplow']['search'] = true;
       // Assign the array of individual search terms (use space as delimiter)
-      $page['#attached']['drupalSettings']['search_terms'] = explode(' ', $search_terms);
+      $page['#attached']['drupalSettings']['gdx_snowplow']['search_terms'] = explode(' ', $search_terms);
     }
   }
   // Attach the tracking code to front-end pages if the search toggle is enabled
