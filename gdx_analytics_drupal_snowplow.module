@@ -15,6 +15,7 @@ define('GDX_ANALYTICS_HELP_PAGE_ROUTE', 'help.page.gdx_analytics_drupal_snowplow
 // Define constant for tracker versions.
 define('GDX_ANALYTICS_WEBTRACKER', 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker');
 define('GDX_ANALYTICS_WEBTRACKER_WITH_SEARCH', 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker_search');
+define('GDX_ANALYTICS_WEBTRACKER_WITH_SEARCH_HLBC', 'gdx_analytics_drupal_snowplow/gdx_analytics_drupal_snowplow.webtracker_hlbc');
 
 // Define constant for configuration name.
 define('GDX_ANALYTICS_CONFIG_NAME', 'gdx_analytics_drupal_snowplow.settings');
@@ -138,8 +139,12 @@ function handleTrackerWithSearch(&$page, $settings) {
       $page['#attached']['drupalSettings']['gdx_snowplow']['search_terms'] = explode(' ', $search_terms);
     }
   }
-  // Attach the tracking code to front-end pages if the search toggle is enabled
-  $page['#attached']['library'][] = GDX_ANALYTICS_WEBTRACKER_WITH_SEARCH;
+  if ($settings['gdx_analytics_snowplow_version'] === 'Healthlink Inline Search vC.2.14.0') {
+    $page['#attached']['library'][] = GDX_ANALYTICS_WEBTRACKER_WITH_SEARCH_HLBC;
+  } else {
+    // Attach the tracking code to front-end pages if search toggle is enabled.
+    $page['#attached']['library'][] = GDX_ANALYTICS_WEBTRACKER_WITH_SEARCH;
+  }
 }
 
 /**
