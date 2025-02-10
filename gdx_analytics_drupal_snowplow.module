@@ -131,8 +131,8 @@ function handleTrackerWithSearch(&$page, $settings) {
 
   // Check if any of the search paths are in the URL
   if ($is_search_page) {
-    // Extract the search query parameters from the URI (value of the first key)
-    $search_terms = reset($_GET);
+    // Extract the search query parameters from the request (value of the kw key)
+    $search_terms = \Drupal::request()->query->get('kw');
     if (!empty($search_terms)) {
       $page['#attached']['drupalSettings']['gdx_snowplow']['search'] = true;
       // Assign the array of individual search terms (use space as delimiter)
